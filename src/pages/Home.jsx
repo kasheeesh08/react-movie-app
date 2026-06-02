@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { useDebounce } from 'react-use'
 import Search from '../components/Search'
 import { API_BASE_URL, API_OPTIONS } from '../api'
 import MovieCard from '../components/MovieCard'
@@ -8,14 +9,15 @@ function Home() {
   const [loading, setLoading] = useState(true)
   const [errorMessage, setErrorMessage] = useState('')
   const [searchTerm, setSearchTerm] = useState('')
+  const [debouncedSearchTerm, setDebouncedSearchTerm] = useState('')
 
   useEffect(() => {
     const fetchMovies = async () => {
       try {
         setLoading(true)
 
-        const endpoint = searchTerm
-            ? `${API_BASE_URL}/search/movie?query=${encodeURIComponent(searchTerm)}`
+        const endpoint = debouncedSearchTerm
+            ? `${API_BASE_URL}/search/movie?query=${encodeURIComponent(debouncedSearchTerm)}`
             : `${API_BASE_URL}/discover/movie?sort_by=popularity.desc`
 
         const response = await fetch(
@@ -34,7 +36,15 @@ function Home() {
     }
 
     fetchMovies()
-  }, [searchTerm])
+  }, [debouncedSearchTerm])
+
+  useDebounce(
+    () => {
+        setDebouncedSearchTerm(searchTerm)
+    },
+    500,
+    [searchTerm]
+    )
 
   return (
     <main className="min-h-screen bg-[#030014] text-white px-6 py-10">
@@ -73,7 +83,7 @@ function Home() {
         {!loading && !errorMessage && (
           <section className="mt-10">
             <h2 className="text-2xl font-bold mb-6">
-              Popular Movies
+              {debouncedSearchTerm ? `Search Results for "${debouncedSearchTerm}"` : 'Popular Movies'}
             </h2>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
