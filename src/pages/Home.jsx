@@ -15,7 +15,14 @@ function Home() {
   const [errorMessage, setErrorMessage] = useState('')
   const [searchTerm, setSearchTerm] = useState('')
   const [debouncedSearchTerm, setDebouncedSearchTerm] = useState('')
-  const [watchlist, setWatchlist] = useState([])
+  const [watchlist, setWatchlist] = useState(() => {
+    const savedWatchlist =
+        localStorage.getItem('watchlist')
+
+    return savedWatchlist
+        ? JSON.parse(savedWatchlist)
+        : []
+    })
 
   const toggleWatchlist = (movie) => {
     const alreadyAdded = watchlist.some(
@@ -86,6 +93,13 @@ function Home() {
 
     loadTrendingMovies()
   }, [])
+
+  useEffect(() => {
+  localStorage.setItem(
+    'watchlist',
+    JSON.stringify(watchlist)
+  )
+}, [watchlist])
 
   return (
     <main className="relative min-h-screen overflow-hidden bg-[#030014] text-white px-6 py-10">
