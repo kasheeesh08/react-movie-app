@@ -3,6 +3,7 @@ import { useDebounce } from 'react-use'
 import Search from '../components/Search'
 import { API_BASE_URL, API_OPTIONS } from '../api'
 import MovieCard from '../components/MovieCard'
+import { updateSearchCount } from '../appwrite'
 
 function Home() {
   const [movies, setMovies] = useState([])
@@ -28,6 +29,13 @@ function Home() {
         const data = await response.json()
 
         setMovies(data.results || [])
+
+        if (debouncedSearchTerm && data.results.length > 0) {
+            await updateSearchCount(
+                debouncedSearchTerm,
+                data.results[0]
+            )
+        }
       } catch (error) {
         setErrorMessage('Failed to load movies')
       } finally {
