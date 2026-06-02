@@ -5,25 +5,36 @@ import MovieCard from '../components/MovieCard'
 
 function Home() {
   const [movies, setMovies] = useState([])
+  const [loading, setLoading] = useState(true)
+  const [errorMessage, setErrorMessage] = useState('')
   const [searchTerm, setSearchTerm] = useState('')
 
   useEffect(() => {
     const fetchMovies = async () => {
-      const endpoint =
-        `${API_BASE_URL}/discover/movie?sort_by=popularity.desc`
+      try {
+        setLoading(true)
 
-      const response = await fetch(
-        endpoint,
-        API_OPTIONS
-      )
+        const endpoint = searchTerm
+            ? `${API_BASE_URL}/search/movie?query=${encodeURIComponent(searchTerm)}`
+            : `${API_BASE_URL}/discover/movie?sort_by=popularity.desc`
 
-      const data = await response.json()
+        const response = await fetch(
+          endpoint,
+          API_OPTIONS
+        )
 
-      setMovies(data.results)
+        const data = await response.json()
+
+        setMovies(data.results || [])
+      } catch (error) {
+        setErrorMessage('Failed to load movies')
+      } finally {
+        setLoading(false)
+      }
     }
 
     fetchMovies()
-  }, [])
+  }, [searchTerm])
 
   return (
     <main className="min-h-screen bg-[#030014] text-white px-6 py-10">
@@ -47,21 +58,34 @@ function Home() {
           </p>
         )}
 
-        <section className="mt-10">
+        {loading && (
+          <p className="mt-6">
+            Loading movies...
+          </p>
+        )}
+
+        {errorMessage && (
+          <p className="mt-6 text-red-500">
+            {errorMessage}
+          </p>
+        )}
+
+        {!loading && !errorMessage && (
+          <section className="mt-10">
             <h2 className="text-2xl font-bold mb-6">
-                Popular Movies
+              Popular Movies
             </h2>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-                {movies.map((movie) => (
-                    <MovieCard
-                        key={movie.id}
-                        movie={movie}
-                    />
-                ))}
+              {movies.map((movie) => (
+                <MovieCard
+                  key={movie.id}
+                  movie={movie}
+                />
+              ))}
             </div>
-        </section>
-
+          </section>
+        )}
       </section>
     </main>
   )
