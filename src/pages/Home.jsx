@@ -75,14 +75,21 @@ function Home() {
   return (
     <main className="min-h-screen bg-[#030014] text-white px-6 py-10">
       <section className="max-w-6xl mx-auto text-center">
-        <h1 className="text-5xl font-bold leading-tight">
-          Find Movies You’ll Enjoy Without the Hassle
-        </h1>
 
-        <p className="mt-4 text-gray-400 text-lg">
-          Search movies, explore trending titles,
-          and discover what to watch next.
-        </p>
+        <div className="pt-10">
+            <p className="mb-4 text-sm uppercase tracking-[0.3em] text-purple-400">
+                Movie Discovery Platform
+            </p>
+
+            <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold leading-tight">
+                Discover Movies That Match Your Mood
+            </h1>
+
+            <p className="mt-5 max-w-2xl mx-auto text-gray-400 text-base sm:text-lg">
+                Search your favourite movies, explore trending searches,
+                and find your next watch in seconds.
+            </p>
+        </div>
 
         <Search
           searchTerm={searchTerm}
@@ -96,38 +103,46 @@ function Home() {
         )}
 
         {trendingMovies.length > 0 && (
-          <section className="mt-10">
-            <h2 className="text-2xl font-bold mb-6">
-              Trending Searches
-            </h2>
+            <section className="mt-14 text-left">
+                <div className="flex items-center justify-between mb-6">
+                    <h2 className="text-2xl font-bold">
+                        Trending Searches
+                    </h2>
 
-            <div className="flex gap-5 overflow-x-auto pb-4">
-              {trendingMovies.map((movie, index) => (
-                <div
-                  key={movie.$id}
-                  className="min-w-[180px] bg-slate-900 rounded-xl p-3"
-                >
-                  <p className="text-4xl font-bold text-purple-400">
-                    #{index + 1}
-                  </p>
-
-                  <img
-                    src={movie.posterUrl}
-                    alt={movie.searchTerm}
-                    className="w-full h-[240px] object-cover rounded-lg mt-3"
-                  />
-
-                  <p className="mt-3 font-semibold">
-                    {movie.searchTerm}
-                  </p>
-
-                  <p className="text-gray-400 text-sm">
-                    Searches: {movie.count}
-                  </p>
+                    <p className="text-sm text-gray-400">
+                        Based on what users search
+                    </p>
                 </div>
-              ))}
-            </div>
-          </section>
+
+                <div className="flex gap-5 overflow-x-auto pb-4">
+                    {trendingMovies.map((movie, index) => (
+                        <div
+                            key={movie.$id}
+                            className="min-w-[210px] bg-white/5 border border-white/10 rounded-2xl p-4 hover:bg-white/10 transition-all duration-300"
+                        >
+                            <div className="flex items-center justify-between mb-3">
+                                <span className="text-4xl font-black text-purple-400">
+                                    #{index + 1}
+                                </span>
+
+                                <span className="text-xs bg-purple-500/20 text-purple-300 px-3 py-1 rounded-full">
+                                    {movie.count} searches
+                                </span>
+                            </div>
+
+                            <img
+                                src={movie.posterUrl}
+                                alt={movie.searchTerm}
+                                className="w-full h-[260px] object-cover rounded-xl"
+                            />
+
+                            <p className="mt-4 font-semibold capitalize line-clamp-1">
+                                {movie.searchTerm}
+                            </p>
+                        </div>
+                    ))}
+                </div>
+            </section>
         )}
 
         {loading && (
@@ -150,14 +165,20 @@ function Home() {
                 : 'Popular Movies'}
             </h2>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-              {movies.map((movie) => (
-                <MovieCard
-                  key={movie.id}
-                  movie={movie}
-                />
-              ))}
-            </div>
+            {movies.length > 0 ? (
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                    {movies.map((movie) => (
+                        <MovieCard
+                            key={movie.id}
+                            movie={movie}
+                        />
+                    ))}
+                </div>
+            ) : (
+                <p className="text-gray-400">
+                    No movies found.
+                </p>
+            )}
           </section>
         )}
       </section>

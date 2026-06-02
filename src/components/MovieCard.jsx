@@ -12,21 +12,29 @@ function MovieCard({ movie }) {
     : 'N/A'
 
   return (
-    <div className="bg-slate-900/80 border border-white/10 rounded-2xl p-4 hover:scale-105 transition-transform duration-300">
-      <img
-        src={posterUrl}
-        alt={movie.title}
-        className="w-full h-[420px] object-cover rounded-xl"
-      />
+    <div className="group bg-slate-900/80 border border-white/10 rounded-2xl overflow-hidden shadow-lg hover:shadow-purple-500/20 hover:-translate-y-2 transition-all duration-300">
+      
+      <div className="overflow-hidden">
+        <img
+          src={posterUrl}
+          alt={movie.title}
+          className="w-full h-[420px] object-cover group-hover:scale-110 transition-transform duration-500"
+        />
+      </div>
 
-      <div className="mt-4">
+      <div className="p-4">
         <h3 className="font-bold text-lg line-clamp-1">
           {movie.title}
         </h3>
 
-        <div className="flex items-center justify-between mt-3 text-sm text-gray-300">
-          <p>⭐ {rating}</p>
-          <p>{year}</p>
+        <div className="flex items-center justify-between mt-3 text-sm">
+          <span className="text-yellow-400">
+            ⭐ {rating}
+          </span>
+
+          <span className="text-gray-400">
+            {year}
+          </span>
         </div>
 
         <p className="mt-3 text-sm text-gray-400 line-clamp-3">
