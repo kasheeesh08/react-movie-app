@@ -157,6 +157,15 @@ function Home() {
           <p className="mt-3 font-semibold line-clamp-1">
             {movie.title}
           </p>
+
+
+          <button
+            onClick={() => toggleWatchlist(movie)}
+            className="mt-3 w-full rounded-lg bg-red-500/20 py-2 text-sm text-red-300 hover:bg-red-500/30 transition"
+            >
+                Remove
+        </button>
+
         </div>
       ))}
     </div>
