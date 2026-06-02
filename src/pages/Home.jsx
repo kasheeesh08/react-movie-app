@@ -73,9 +73,10 @@ function Home() {
   }, [])
 
   return (
-    <main className="min-h-screen bg-[#030014] text-white px-6 py-10">
-      <section className="max-w-6xl mx-auto text-center">
-
+    <main className="relative min-h-screen overflow-hidden bg-[#030014] text-white px-6 py-10">
+        <div className="pointer-events-none absolute left-1/2 top-0 h-[500px] w-[500px] -translate-x-1/2 rounded-full bg-purple-600/20 blur-[120px]" />
+      <section className="relative z-10 max-w-6xl mx-auto text-center">
+        
         <div className="pt-10">
             <p className="mb-4 text-sm uppercase tracking-[0.3em] text-purple-400">
                 Movie Discovery Platform
@@ -146,15 +147,15 @@ function Home() {
         )}
 
         {loading && (
-          <p className="mt-6">
-            Loading movies...
-          </p>
+            <div className="mt-10 flex justify-center">
+                <div className="h-10 w-10 animate-spin rounded-full border-4 border-purple-500 border-t-transparent" />
+            </div>
         )}
 
         {errorMessage && (
-          <p className="mt-6 text-red-500">
-            {errorMessage}
-          </p>
+            <div className="mt-8 rounded-xl border border-red-500/30 bg-red-500/10 px-5 py-4 text-red-300">
+                {errorMessage}
+            </div>
         )}
 
         {!loading && !errorMessage && (
@@ -175,9 +176,15 @@ function Home() {
                     ))}
                 </div>
             ) : (
-                <p className="text-gray-400">
-                    No movies found.
-                </p>
+                <div className="mt-10 rounded-2xl border border-white/10 bg-white/5 p-10 text-center">
+                    <h3 className="text-xl font-semibold">
+                        No Movies Found
+                    </h3>
+
+                    <p className="mt-3 text-gray-400">
+                        Try searching with a different keyword.
+                    </p>
+                </div>
             )}
           </section>
         )}
