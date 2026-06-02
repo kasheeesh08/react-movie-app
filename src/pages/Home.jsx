@@ -23,6 +23,7 @@ function Home() {
         ? JSON.parse(savedWatchlist)
         : []
     })
+  const [selectedMovie, setSelectedMovie] = useState(null)
 
   const toggleWatchlist = (movie) => {
     const alreadyAdded = watchlist.some(
@@ -245,6 +246,7 @@ function Home() {
                     isInWatchlist={watchlist.some(
                       (item) => item.id === movie.id
                     )}
+                    onMovieClick={setSelectedMovie}
                   />
                 ))}
               </div>
@@ -262,6 +264,50 @@ function Home() {
           </section>
         )}
       </section>
+
+      {selectedMovie && (
+  <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 px-4">
+    <div className="relative max-w-4xl w-full rounded-2xl bg-slate-900 border border-white/10 p-6 text-left">
+      <button
+        onClick={() => setSelectedMovie(null)}
+        className="absolute right-4 top-4 rounded-full bg-white/10 px-3 py-1 text-white hover:bg-white/20"
+      >
+        ✕
+      </button>
+
+      <div className="grid gap-6 md:grid-cols-[280px_1fr]">
+        <img
+          src={
+            selectedMovie.poster_path
+              ? `https://image.tmdb.org/t/p/w500${selectedMovie.poster_path}`
+              : 'https://placehold.co/500x750/1e293b/ffffff?text=No+Poster'
+          }
+          alt={selectedMovie.title}
+          className="w-full rounded-xl"
+        />
+
+        <div>
+          <h2 className="text-3xl font-bold">
+            {selectedMovie.title}
+          </h2>
+
+          <p className="mt-3 text-yellow-400">
+            ⭐ {selectedMovie.vote_average?.toFixed(1) || 'N/A'}
+          </p>
+
+          <p className="mt-2 text-gray-400">
+            Release Date: {selectedMovie.release_date || 'N/A'}
+          </p>
+
+          <p className="mt-6 text-gray-300 leading-relaxed">
+            {selectedMovie.overview || 'No overview available.'}
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+)}
+
     </main>
   )
 }
