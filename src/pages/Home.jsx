@@ -302,6 +302,16 @@ function Home() {
           <p className="mt-6 text-gray-300 leading-relaxed">
             {selectedMovie.overview || 'No overview available.'}
           </p>
+
+          <button
+            onClick={() => toggleWatchlist(selectedMovie)}
+            className="mt-6 rounded-xl bg-purple-600 px-5 py-3 font-semibold hover:bg-purple-700 transition"
+          >
+            {watchlist.some((item) => item.id === selectedMovie.id)
+                ? 'Remove from Watchlist'
+                : 'Add to Watchlist'}
+        </button>
+
         </div>
       </div>
     </div>
