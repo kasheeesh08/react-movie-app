@@ -19,21 +19,21 @@ Users can search movies, explore trending searches, view detailed movie informat
 
 ## 📸 Screenshots
 
-### Homepage
+## Homepage
 
-![Homepage](./screenshots/homepage.png)
+![Homepage](./homepage.png)
 
-### Search Results
+## Search Results
 
-![Search Results](./screenshots/search-results.png)
+![Search Results](./search-result.png)
 
-### Watchlist
+## Watchlist
 
-![Watchlist](./screenshots/watchlist.png)
+![Watchlist](./watchlist.png)
 
-### Movie Details Modal
+## Movie Details Modal
 
-![Movie Modal](./screenshots/movie-modal.png)
+![Movie Modal](./movie-modal.png)
 
 ---
 
