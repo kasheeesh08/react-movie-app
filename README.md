@@ -13,7 +13,7 @@ Users can search movies, explore trending searches, view detailed movie informat
 
 ## 🚀 Live Demo
 
-🔗 https://react-movie-app-rho-pied.vercel.app/)
+🔗 https://react-movie-app-rho-pied.vercel.app/
 
 ---
 
